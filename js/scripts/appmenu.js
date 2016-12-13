@@ -2,11 +2,13 @@ var uri = "./Api/";
 var gl_resultado = {};
 var app;
 
-    app = angular.module("colegio", ['ngRoute']);
+    app = angular.module("menu", ['ngRoute']);
 
     app.config(['$routeProvider', '$locationProvider', function AppConfig($routeProvider, $locationProvider){
             $routeProvider
-                
+                .when('/materias', {
+                    templateUrl: 'vistas/materias.html'
+                })
     }]);
 
     app.directive('uploaderModel',['$parse',function($parse){
