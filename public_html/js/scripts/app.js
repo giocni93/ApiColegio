@@ -8,6 +8,7 @@ var app;
     app.config(['$routeProvider', '$locationProvider', function AppConfig($routeProvider, $locationProvider){
             $routeProvider
                 
+
     }]);
 
     app.directive('uploaderModel',['$parse',function($parse){
