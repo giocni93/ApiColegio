@@ -1,4 +1,5 @@
 var uri = "./Api/";
+var url = "./";
 var gl_resultado = {};
 var app;
 
