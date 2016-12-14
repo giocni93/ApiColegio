@@ -1,14 +1,19 @@
 var uri = "./Api/";
 var gl_resultado = {};
 var app;
-
+(function(){
     app = angular.module("menu", ['ngRoute']);
 
     app.config(['$routeProvider', '$locationProvider', function AppConfig($routeProvider, $locationProvider){
-            $routeProvider
-                .when('/materias', {
-                    templateUrl: 'vistas/materias.html'
-                })
+        $routeProvider
+            .when('/materia', {
+                templateUrl: 'vistas/materias.html'
+            })
+            .when('/profesores', {
+                templateUrl: 'vistas/profesor.html'
+            })
+            console.log("as")
+            
     }]);
 
     app.directive('uploaderModel',['$parse',function($parse){
@@ -24,3 +29,4 @@ var app;
 
     }]);
 
+})();
