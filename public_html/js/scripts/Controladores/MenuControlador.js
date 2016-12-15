@@ -1,5 +1,7 @@
 app.controller('MenuControlador', function ($scope) {
-
+	$scope.user = {
+		perfil : 'ADMIN'
+	};
 	$scope.active = "";
 	$scope.banMenu = [true,false,false,false];
 	$scope.activar = function(val){
