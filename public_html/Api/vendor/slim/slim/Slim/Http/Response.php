@@ -91,6 +91,7 @@ class Response extends Message implements ResponseInterface
         416 => 'Requested Range Not Satisfiable',
         417 => 'Expectation Failed',
         418 => 'I\'m a teapot',
+        421 => 'Misdirected Request',
         422 => 'Unprocessable Entity',
         423 => 'Locked',
         424 => 'Failed Dependency',
@@ -98,7 +99,9 @@ class Response extends Message implements ResponseInterface
         428 => 'Precondition Required',
         429 => 'Too Many Requests',
         431 => 'Request Header Fields Too Large',
+        444 => 'Connection Closed Without Response',
         451 => 'Unavailable For Legal Reasons',
+        499 => 'Client Closed Request',
         //Server Error 5xx
         500 => 'Internal Server Error',
         501 => 'Not Implemented',
@@ -111,6 +114,7 @@ class Response extends Message implements ResponseInterface
         508 => 'Loop Detected',
         510 => 'Not Extended',
         511 => 'Network Authentication Required',
+        599 => 'Network Connect Timeout Error',
     ];
 
     /**
@@ -136,7 +140,6 @@ class Response extends Message implements ResponseInterface
     public function __clone()
     {
         $this->headers = clone $this->headers;
-        $this->body = clone $this->body;
     }
 
     /*******************************************************************************
@@ -273,12 +276,22 @@ class Response extends Message implements ResponseInterface
      * response to the client.
      *
      * @param  string|UriInterface $url    The redirect destination.
-     * @param  int                 $status The redirect HTTP status code.
+     * @param  int|null            $status The redirect HTTP status code.
      * @return self
      */
-    public function withRedirect($url, $status = 302)
+    public function withRedirect($url, $status = null)
     {
-        return $this->withStatus($status)->withHeader('Location', (string)$url);
+        $responseWithRedirect = $this->withHeader('Location', (string)$url);
+
+        if (is_null($status) && $this->getStatusCode() === 200) {
+            $status = 302;
+        }
+
+        if (!is_null($status)) {
+            return $responseWithRedirect->withStatus($status);
+        }
+
+        return $responseWithRedirect;
     }
 
     /**
@@ -295,18 +308,21 @@ class Response extends Message implements ResponseInterface
      * @throws \RuntimeException
      * @return self
      */
-    public function withJson($data, $status = 200, $encodingOptions = 0)
+    public function withJson($data, $status = null, $encodingOptions = 0)
     {
-        $body = $this->getBody();
-        $body->rewind();
-        $body->write($json = json_encode($data, $encodingOptions));
+        $response = $this->withBody(new Body(fopen('php://temp', 'r+')));
+        $response->body->write($json = json_encode($data, $encodingOptions));
 
         // Ensure that the json encoding passed successfully
         if ($json === false) {
             throw new \RuntimeException(json_last_error_msg(), json_last_error());
         }
 
-        return $this->withStatus($status)->withHeader('Content-Type', 'application/json;charset=utf-8');
+        $responseWithJson = $response->withHeader('Content-Type', 'application/json;charset=utf-8');
+        if (isset($status)) {
+            return $responseWithJson->withStatus($status);
+        }
+        return $responseWithJson;
     }
 
     /**

@@ -3,7 +3,7 @@
   $config = array(
       'driver'    => 'mysql',
       'host'      => 'localhost',
-      'database'  => 'buscalo',
+      'database'  => 'colegio',
       'username'  => 'root',
       'password'  => '',
       'collation' => 'utf8_general_ci',
