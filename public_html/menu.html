@@ -48,23 +48,41 @@
 			</div>
 			<div class="sidebar-wrapper">
 				<ul class="nav">
-					<li class="{{active}}">
-	                    <a href="menu.html#!/materia" ng-click="activar(1)">
+					<li ng-class="{'active' : banMenu[0]}">
+	                    <a href="menu.html#!/materia" ng-click="activar(0)">
 	                        <i class="material-icons">dashboard</i>
 	                        <p>Materias</p>
 	                    </a>
 	                </li>
-	                <li class="{{active1}}">
-	                    <a href="menu.html#!/profesores" ng-click="activar(2)">
+	                <li ng-class="{'active' : banMenu[1]}">
+	                    <a href="menu.html#!/profesores" ng-click="activar(1)">
 	                        <i class="material-icons">person</i>
 	                        <p>Profesores</p>
 	                    </a>
 	                </li>
-	                <li class="{{active2}}">
-	                    <a href="" ng-click="activar(3)">
+	                <li ng-class="{'active' : banMenu[2]}">
+	                    <a href="" ng-click="activar(2)">
 	                        <i class="material-icons">android</i>
 	                        <p>Estudiantes</p>
 	                    </a>
+	                </li>
+	                <li ng-class="{'active' : banMenu[3]}">
+	                	<a href="" ng-click="activar(3)" data-parent="#nav-menu" data-toggle="collapse" data-target="#submenu1">
+	                        <i class="material-icons">android</i>
+	                        <p>Configuracion</p>
+	                    </a>
+	                	<div class="submenu">
+		                    <div class="submenu-body collapse" id="submenu1">
+		                    <ul class="nav" >
+		                    	<li class="">
+				                    <a href="menu.html#!/materia" ng-click="activar(0)" style="background-color: transparent;">
+				                        <i class="material-icons">dashboard</i>
+				                        <p>Materias</p>
+				                    </a>
+				                </li>
+		                    </ul>
+		                    </div>                    
+		                </div>
 	                </li>
 				</ul>
 			</div>
