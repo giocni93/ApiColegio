@@ -1,0 +1,18 @@
+{
+    "require": {
+        "slim/slim": "*",
+        "illuminate/database": "<5.2",
+        "tuupola/slim-jwt-auth" : "*",
+        "firebase/php-jwt" : "*"
+    },
+    "autoload": {
+        "classmap" : [
+          	"Modelos/",
+            "Controladores/"
+        ],
+        "files": [
+          "Conexion/Conexion.php",
+          "Utiles/Utiles.php"
+        ]
+    }
+}
