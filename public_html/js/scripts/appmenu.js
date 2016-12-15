@@ -3,10 +3,10 @@ var gl_resultado = {};
 var app;
 (function(){
     app = angular.module("menu", ['ngRoute','satellizer']);
-
+    
     app.config(['$routeProvider', '$locationProvider', '$authProvider','$httpProvider' , function AppConfig($routeProvider, $locationProvider, $authProvider, $httpProvider){
         //$authProvider.loginUrl =  uri+'usuario/login';    
-        $authProvider.loginUrl =  '/PROYECTOS/ProyectoSlim/ApiColegio/public_html/api/usuario/login';       
+        $authProvider.loginUrl =  '/ApiColegio/public_html/api/usuario/login';       
         $authProvider.tokenName = "token";
         $authProvider.tokenPrefix = "sch";
         $authProvider.storageType = 'sessionStorage'; 
