@@ -13,16 +13,16 @@ class UsuarioControl{
       $token = array(
           'iat' => $time,
           'exp' => $time + (60*60), 
-          'data' => [ 
+          'user' => [ 
               'id' => 1,
-              'name' => 'Eduardo'
+              'name' => 'Giocni'
           ]
       );
       $jwt = JWT::encode($token, $key);
       $data = array(
-        "datos" => [ 
+        "user" => [ 
               'id' => 1,
-              'name' => 'Eduardo'
+              'name' => 'Giocni'
           ],
         "token" => $jwt
       );
