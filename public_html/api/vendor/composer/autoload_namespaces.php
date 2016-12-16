@@ -7,8 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Pimple' => array($vendorDir . '/pimple/pimple/src'),
-    'Illuminate\\Support' => array($vendorDir . '/illuminate/support'),
-    'Illuminate\\Events' => array($vendorDir . '/illuminate/events'),
-    'Illuminate\\Database' => array($vendorDir . '/illuminate/database'),
-    'Illuminate\\Container' => array($vendorDir . '/illuminate/container'),
+    'Doctrine\\Common\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib'),
 );

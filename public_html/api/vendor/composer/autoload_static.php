@@ -130,8 +130,14 @@ class ComposerStaticInit31bf6f929d587b3c7bfbcb6f64c2524a
     );
 
     public static $classMap = array (
+        'Materia' => __DIR__ . '/../..' . '/Modelos/Materia.php',
+        'MateriaControl' => __DIR__ . '/../..' . '/Controladores/MateriaControl.php',
+        'Menu' => __DIR__ . '/../..' . '/Modelos/Menu.php',
+        'Perfil' => __DIR__ . '/../..' . '/Modelos/Perfil.php',
+        'Permisos' => __DIR__ . '/../..' . '/Modelos/Permisos.php',
         'Profesor' => __DIR__ . '/../..' . '/Modelos/Profesor.php',
         'ProfesorControl' => __DIR__ . '/../..' . '/Controladores/ProfesorControl.php',
+        'Usuario' => __DIR__ . '/../..' . '/Modelos/Usuario.php',
         'UsuarioControl' => __DIR__ . '/../..' . '/Controladores/UsuarioControl.php',
     );
 

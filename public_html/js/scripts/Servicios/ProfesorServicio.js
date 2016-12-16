@@ -5,4 +5,4 @@ app.service("ProfesorServicio", function ($http) {
         return req;
 	}	
 
-})
+});

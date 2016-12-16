@@ -12,13 +12,15 @@ var app;
         $authProvider.storageType = 'sessionStorage'; 
 
         $routeProvider
-            .when('/materia', {
+            .when('/gestion/materia', {
                 templateUrl: 'vistas/materias.html'
             })
-            .when('/profesores', {
+            .when('/gestion/estudiantes', {
+                templateUrl: 'vistas/estudiantes.html'
+            })
+            .when('/gestion/profesores', {
                 templateUrl: 'vistas/profesor.html'
             })
-            console.log("as")
             
     }]);
 

@@ -1,20 +1,40 @@
 app.controller('LoginControlador', ["$scope","LoginServicio", "$auth", function ($scope,LoginServicio,$auth) {
-	//$auth.getPayload().user;
+	
+	$scope.usuario = {
+		identificacion: "",
+		contrasena : ""
+	}
 
 	$scope.ingresar = function(){
-		alert("kka");
-		var usuario = {
-			identificacion : "",
-			pass : ""
-		};
-		var promise = LoginServicio.login(usuario);
-        promise.then(function(pl) {                        
-            //alert(JSON.stringify(pl.data));
-            location.href = url+"menu.html#!";
-        }, function(err) {           
-            alert(JSON.stringify(err));
-        });
+		if(validarLogin()){
+			var promise = LoginServicio.login($scope.usuario);
+	        promise.then(function(pl) {                        
+	            if(pl.data.std == 0){
+	            	colegio.toast('bottom','center',colorRojo,500,"error",pl.data.msg);
+	            }else{
+	            	colegio.toast('bottom','center',colorVerde,500,"check circle",pl.data.msg);
+	            	setTimeout(function(){
+	            		location.href = url+"menu.html";
+	            	},1500);
+	            }
+	            
+	        }, function(err) {           
+	            colegio.toast('bottom','center',colorRojo,4000,"error",err);
+	        });
+		}
 	};
+
+	function validarLogin(){
+		if($scope.usuario.identificacion.trim() == ""){
+			colegio.toast('bottom','center',colorRojo,500,"error","Debe digitar la identificación.");
+			return false;
+		}
+		if($scope.usuario.contrasena.trim() == ""){
+			colegio.toast('bottom','center',colorRojo,500,"error","Debe digitar una contraseña.");
+			return false;
+		}
+		return true;
+	}
 
 }]);
 

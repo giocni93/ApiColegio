@@ -19,8 +19,6 @@
 	<script src="js/material.min.js" type="text/javascript"></script>
 	<script src="js/material-dashboard.js" type="text/javascript"></script>
 
-
-
     <!-- ANGULAR -->
 	<script src="js/angular/angular.min.js" type="text/javascript"></script>
 	<script src="js/angular/angular-route.min.js" type="text/javascript"></script>
@@ -28,6 +26,9 @@
 
 	<!-- APP ANGULAR -->
 	<script src="js/scripts/appmenu.js" type="text/javascript"></script>
+
+	<!-- MAIN -->
+	<script src="js/scripts/main.js" type="text/javascript"></script>
 
 	<!-- CONTROLADORES -->
 	<script src="js/scripts/Controladores/ProfesorControlador.js" type="text/javascript"></script>
@@ -37,13 +38,50 @@
 	<!-- SERVICIOS -->
 	<script src="js/scripts/Servicios/ProfesorServicio.js" type="text/javascript"></script>
 	<script src="js/scripts/Servicios/MateriasServicio.js" type="text/javascript"></script>
+	<script src="js/scripts/Servicios/UsuarioServicio.js" type="text/javascript"></script>
 
+	<style type="text/css">
+		.noActive{
+			background-color: transparent;
+			box-shadow: none;
+		}
+	</style>
 
 </head>
 <body>
 	<div class="wrapper" ng-controller="MenuControlador">
-		<div ng-include="'vistas/menus/menuAdmin.html'" ng-if="user.perfil == 'ADMIN'"></div>
-		<div ng-include="'vistas/menus/menuProfesor.html'" ng-if="user.perfil == 'PROFESOR'"></div>
+		<div id="menuLateral">
+			<div class="sidebar" data-color="purple" data-image="" style="background-color: white;">
+				<div class="logo">
+					<a href="http://www.creative-tim.com" class="simple-text">
+						SCHOOL
+					</a>
+				</div>
+				<div class="sidebar-wrapper">
+					<ul class="nav" id="navPadre">
+						<li ng-repeat="item in menu" id="lipadre_{{item.id}}">
+			                <a href="" ng-click="activar(item)" data-parent="#nav-menu" data-toggle="collapse" data-target="#submenu{{$index}}">
+			                    <i class="material-icons">{{item.icon}}</i>
+			                    <p>{{item.nombre}}</p>
+			                </a>
+			                <div class="submenu" style="margin-top: -10px; padding-left: 20px;">
+				                <div class="submenu-body collapse" id="submenu{{$index}}">
+					                <ul class="nav" id="navHija">
+					                	<li ng-repeat="subItem in item.menu" id="lihijo_{{subItem.id}}" >
+						                    <a href="{{subItem.ruta}}" id="ahijo_{{subItem.id}}"  ng-click="activarSub(subItem)" style="background-color: transparent;
+			box-shadow: none;">
+						                        <i class="material-icons">{{subItem.icono}}</i>
+						                        <p>{{subItem.item}}</p>
+						                    </a>
+						                </li>
+					                </ul>
+				                </div>                    
+				            </div>
+			            </li>
+					</ul>
+				</div>
+			</div>
+		</div>
 		<div class="main-panel">
 			<nav class="navbar navbar-transparent navbar-absolute">
 				<div class="container-fluid">

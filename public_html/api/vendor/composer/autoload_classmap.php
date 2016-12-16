@@ -8,7 +8,11 @@ $baseDir = dirname($vendorDir);
 return array(
     'Materia' => $baseDir . '/Modelos/Materia.php',
     'MateriaControl' => $baseDir . '/Controladores/MateriaControl.php',
+    'Menu' => $baseDir . '/Modelos/Menu.php',
+    'Perfil' => $baseDir . '/Modelos/Perfil.php',
+    'Permisos' => $baseDir . '/Modelos/Permisos.php',
     'Profesor' => $baseDir . '/Modelos/Profesor.php',
     'ProfesorControl' => $baseDir . '/Controladores/ProfesorControl.php',
+    'Usuario' => $baseDir . '/Modelos/Usuario.php',
     'UsuarioControl' => $baseDir . '/Controladores/UsuarioControl.php',
 );
