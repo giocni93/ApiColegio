@@ -2,6 +2,7 @@ app.controller('ProfesorControlador', ["$scope", "$auth", "ProfesorServicio", fu
 
 	getInfoUsuarioSesion();
 
+
 	function getInfoUsuarioSesion(){
 		console.log($auth.getPayload().user);
 	}
@@ -14,5 +15,16 @@ app.controller('ProfesorControlador', ["$scope", "$auth", "ProfesorServicio", fu
             alert(JSON.stringify(err));
         });
 	};
+
+	$scope.getProfesorById = function(){
+		var promise = ProfesorServicio.getById(1);
+        promise.then(function(pl) {                        
+            alert(JSON.stringify(pl.data));
+        }, function(err) {           
+            alert(JSON.stringify(err));
+        });
+	};
+
+	$scope.getProfesorById ();
 	
 }]);

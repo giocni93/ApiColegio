@@ -1,8 +1,13 @@
-app.service("ProfesorServicio", function ($http) {
+app.service("ProfesorServicio",["$http", function ($http) {
 
 	this.getAll = function(){
 		var req = $http.get(uri+'profesores');
         return req;
 	}	
 
-});
+	this.getById = function(idProfesor){
+		var req = $http.get(uri+'profesor/'+idProfesor);
+        return req;
+	}
+
+}]);

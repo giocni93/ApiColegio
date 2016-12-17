@@ -5,7 +5,9 @@ app.controller('MenuControlador',["$scope","$auth","$sce","UsuarioServicio", fun
 	var elementAnteriorSub = null;
 	var element_a_anterior = null;
 
-	$scope.getMenu = function(){
+	getMenu();
+
+	function getMenu(){
 		var user = $auth.getPayload().user;
 		var promise = UsuarioServicio.getMenu(user.idPerfil);
         promise.then(function(pl) {        
@@ -13,13 +15,14 @@ app.controller('MenuControlador',["$scope","$auth","$sce","UsuarioServicio", fun
         }, function(err) {           
             colegio.toast('bottom','center',colorRojo,4000,"error",err);
         });
-	};
+	}
+
 
 	$scope.renderHtml = function (htmlCode) {
         return $sce.trustAsHtml(htmlCode);
     };
 
-	$scope.getMenu();
+	
 
 	$scope.activar = function(item){
 		var element = document.getElementById("lipadre_"+item.id);

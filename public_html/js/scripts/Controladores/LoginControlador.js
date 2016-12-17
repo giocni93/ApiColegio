@@ -3,7 +3,7 @@ app.controller('LoginControlador', ["$scope","LoginServicio", "$auth", function 
 	$scope.usuario = {
 		identificacion: "",
 		contrasena : ""
-	}
+	};
 
 	$scope.ingresar = function(){
 		if(validarLogin()){

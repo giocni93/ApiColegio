@@ -11,4 +11,12 @@ class ProfesorControl{
       return $response;
   	}
 
+  	function getById(Request $request, Response $response) {
+      $response = $response->withHeader('Content-type', 'application/json');
+      $id = $request->getAttribute("idProfesor");
+      $data = Profesor::select("*")->where("id","=",$id)->first();
+      $response->getBody()->write(json_encode($data));
+      return $response;
+  	}
+
 }
