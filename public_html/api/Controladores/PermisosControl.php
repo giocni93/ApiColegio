@@ -17,6 +17,10 @@ class PermisosControl{
         }
         $dataModulos[$i]['menu'] = $vec;
       }
+      for($i = 0; $i < count($dataModulos); $i++){
+        if(count($dataModulos[$i]['menu']) == 0)
+          unset($dataModulos[$i]);
+      }
       $response->getBody()->write(json_encode($dataModulos));
       return $response;
   	}

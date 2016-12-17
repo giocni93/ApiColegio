@@ -21,6 +21,9 @@ var app;
             .when('/gestion/profesores', {
                 templateUrl: 'vistas/profesor.html'
             })
+            .when('/seguridad/usuarios', {
+                templateUrl: 'vistas/usuario.html'
+            })
             
     }]);
 

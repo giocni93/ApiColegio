@@ -1,5 +1,5 @@
-app.controller('MateriasControlador', function ($scope,MateriasServicio) {
+app.controller('MateriasControlador',["$scope", "MateriasServicio", function ($scope,MateriasServicio) {
 
 	
 	
-});
+}]);

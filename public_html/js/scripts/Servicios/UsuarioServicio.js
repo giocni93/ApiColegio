@@ -5,4 +5,9 @@ app.service("UsuarioServicio", function ($http) {
         return req;
 	}	
 
+	this.getAllPermisos = function(){
+		var req = $http.get(uri+'permisos');
+        return req;
+	}	
+
 });
