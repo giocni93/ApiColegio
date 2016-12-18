@@ -1,3 +1,24 @@
 <div ng-controller="MateriasControlador">
-	<h1>hola mundo1</h1>
+
+<div class="card">
+	<div class="card-header" data-background-color="purple">
+		<h4 class="title">Materias</h4>
+		<p class="category">Carga Academica</p>
+	</div>
+	<div class="card-content table-responsive table-full-width">
+		<table class="table">
+			<thead class="text-danger">
+				<tr>
+					<th>id</th>
+					<th>Materia</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="materia in arrayMateria" >
+					<td>{{materia.id}}</td>
+					<td>{{materia.materia}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>	
 </div>

@@ -43,6 +43,7 @@ class UsuarioControl{
       $response = $response->withHeader('Content-type', 'application/json');
       $dataBody = json_decode($request->getBody(),true);
       $respuesta = array();
+      
       //validar si existen los campos
       if(!isset($dataBody['identificacion']) || !isset($dataBody['contrasena'])){
         $respuesta = array("msg" => "Datos incompletos.", "std" => 0);
