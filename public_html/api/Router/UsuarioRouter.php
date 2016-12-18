@@ -1,4 +1,6 @@
 <?php
 
 $app->post('/usuario/login', "UsuarioControl:login");
-$app->get('/usuario/perfil/{idPerfil}/menu', "UsuarioControl:getMenuByPerfil");
+$app->post('/usuario', "UsuarioControl:post");
+$app->get('/usuario/menu', "UsuarioControl:getMenuByUsuario");
+$app->get('/usuario', "UsuarioControl:getAll");

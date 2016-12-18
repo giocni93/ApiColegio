@@ -18,11 +18,18 @@ class PermisosControl{
         $dataModulos[$i]['menu'] = $vec;
       }
       for($i = 0; $i < count($dataModulos); $i++){
-        if(count($dataModulos[$i]['menu']) == 0)
-          unset($dataModulos[$i]);
+        //if(count($dataModulos[$i]['menu']) == 0)
+          //unset($dataModulos[$i]);
       }
       $response->getBody()->write(json_encode($dataModulos));
       return $response;
   	}
+
+    function getPerfiles(Request $request, Response $response) {
+      $response = $response->withHeader('Content-type', 'application/json');
+      $data = Perfil::all();
+      $response->getBody()->write(json_encode($data));
+      return $response;
+    }
 
 }

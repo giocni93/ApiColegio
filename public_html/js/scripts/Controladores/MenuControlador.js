@@ -8,12 +8,12 @@ app.controller('MenuControlador',["$scope","$auth","$sce","UsuarioServicio", fun
 	getMenu();
 
 	function getMenu(){
-		var user = $auth.getPayload().user;
-		var promise = UsuarioServicio.getMenu(user.idPerfil);
-        promise.then(function(pl) {        
+		//var user = $auth.getPayload().user;
+		var promise = UsuarioServicio.getMenu();
+        promise.then(function(pl) {   
         	$scope.menu = pl.data;
-        }, function(err) {           
-            colegio.toast('bottom','center',colorRojo,4000,"error",err);
+        }, function(err) {    
+            colegio.toast('bottom','center',colorRojo,4000,"error",JSON.stringify(err));
         });
 	}
 
@@ -37,6 +37,13 @@ app.controller('MenuControlador',["$scope","$auth","$sce","UsuarioServicio", fun
 			element.className = "";
 		elementAnterior = element;
 	}
+
+	$scope.cerrarSesion = function(){
+		$auth.logout()
+        .then(function() {
+            location.href = "index.html";
+        });
+	};
 
 	$scope.activarSub = function(item){
 		var element = document.getElementById("lihijo_"+item.id);

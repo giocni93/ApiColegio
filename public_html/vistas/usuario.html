@@ -14,19 +14,41 @@
 						<div class="col-sm-4">
 							<div class="form-group label-floating">
 								<label class="control-label">Usuario</label>
-								<input type="text" class="form-control">
+								<input ng-model="usuario.usuario" type="text" class="form-control">
 							</div>
 						</div>
 						<div class="col-sm-4">
 							<div class="form-group label-floating">
 								<label class="control-label">Contraseña</label>
-								<input type="password" class="form-control">
+								<input ng-model="usuario.contrasena" type="password" class="form-control">
 							</div>
 						</div>
 						<div class="col-sm-4">
 							<div class="form-group label-floating">
 								<label class="control-label">Confirmar contraseña</label>
-								<input type="password" class="form-control">
+								<input ng-model="contrasena" type="password" class="form-control">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group label-floating">
+								<label class="control-label">Perfil</label>
+								<select ng-model="usuario.perfil" type="email" class="form-control">
+									<option ng-repeat="item in perfiles" value="{{item.id}}">{{item.nombre}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group label-floating">
+								<label class="control-label">Email</label>
+								<input ng-model="usuario.email" type="email" class="form-control">
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group label-floating">
+								<label class="control-label">Teléfono</label>
+								<input ng-model="usuario.telefono" type="text" class="form-control">
 							</div>
 						</div>
 					</div>
@@ -42,7 +64,7 @@
 							<div class="col-sm-4" ng-repeat="subItem in item.menu">
 								<div class="checkbox">
 									<label style="color: black;">
-										<input type="checkbox" name="optionsCheckboxes"><span class="checkbox-material"><span class="check"></span></span>
+										<input ng-model="subItem.check" type="checkbox" name="optionsCheckboxes"><span class="checkbox-material"><span class="check"></span></span>
 										{{subItem.item}}
 									</label>
 								</div>
@@ -52,63 +74,42 @@
 				</div>
 				<div class="card-footer">
 					<div class="stats">
-						<a href="#pablo" class="btn btn-primary btn-round">Guardar<div class="ripple-container"></div></a>
+						<button ng-click="registrarUsuario();" class="btn btn-primary btn-round">Guardar</button>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="card">
-				<div class="card-header" data-background-color="orange">
+				<div class="card-header" data-background-color="green">
 					<h4 class="title">Lista de usuarios</h4>
 	                <p class="category">Puede editar y desactivar los usuarios</p>
 				</div>
 				<div class="card-content table-responsive">
                     <table class="table">
-                        <thead class="text-primary">
+                        <thead class="text-success">
                         	<tr>
                         		<th>Usuario</th>
-                        		<th>Fecha creación</th>
+                        		<th style="width: 190px;">Fecha creación</th>
                         		<th>Estado</th>
 								<th>Editar</th>
                         	</tr>
                         </thead>
                         <tbody>
-                            <tr>
-                            	<td>Dakota Rice</td>
-                            	<td>Niger</td>
-                            	<td>Oud-Turnhout</td>
-								<td class="text-primary">$36,738</td>
-                            </tr>
-                            <tr>
-                            	<td>Minerva Hooper</td>
-                            	<td>Curaçao</td>
-                            	<td>Sinaai-Waas</td>
-								<td class="text-primary">$23,789</td>
-                            </tr>
-                            <tr>
-                            	<td>Sage Rodriguez</td>
-                            	<td>Netherlands</td>
-                            	<td>Baileux</td>
-								<td class="text-primary">$56,142</td>
-                            </tr>
-                            <tr>
-                            	<td>Philip Chaney</td>
-                            	<td>Korea, South</td>
-                            	<td>Overland Park</td>
-								<td class="text-primary">$38,735</td>
-                            </tr>
-                            <tr>
-                            	<td>Doris Greene</td>
-                            	<td>Malawi</td>
-                            	<td>Feldkirchen in Kärnten</td>
-								<td class="text-primary">$63,542</td>
-                            </tr>
-                            <tr>
-                            	<td>Mason Porter</td>
-                            	<td>Chile</td>
-                            	<td>Gloucester</td>
-								<td class="text-primary">$78,615</td>
+                            <tr ng-repeat="item in usuarios">
+                            	<td>{{item.identificacion}}</td>
+                            	<td>{{item.fechaCreacion | date:"dd-MM-yyyy 'a las' h:mm a"}}</td>
+                            	<td>
+                            		<div class="material-switch pull-center">
+			                            <input ng-checked="item.estado == 'ACTIVO'" id="check{{item.id}}" name="check{{item.id}}" type="checkbox"/>
+			                            <label for="check{{item.id}}" class="label-info"></label>
+			                        </div>
+                            	</td>
+								<td >
+									<button class="btn btn-info btn-round btn-just-icon">
+										<i class="material-icons">edit</i><div class="ripple-container"></div>
+									</button>
+								</td>
                             </tr>
                         </tbody>
                     </table>

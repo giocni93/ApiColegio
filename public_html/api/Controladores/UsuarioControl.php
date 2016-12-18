@@ -4,20 +4,59 @@ use Slim\Http\Response;
 use Firebase\JWT\JWT;
 
 class UsuarioControl{
-  
-  function getMenuByPerfil(Request $request, Response $response) {
-      $response = $response->withHeader('Content-type', 'application/json');
-      $idPerfil = $request->getAttribute("idPerfil");
 
-      $data = Permisos::select("modulo.id","modulo.nombre","modulo.abierto","modulo.icon","modulo.id as menu","modulo.id as activo")
+  function getAll(Request $request, Response $response){
+      $response = $response->withHeader('Content-type', 'application/json');
+      $data = Usuario::select("id","idPerfil","identificacion","estado","fechaCreacion")->get();
+      $response->getBody()->write(json_encode($data));
+      return $response;
+  }
+
+  function post(Request $request, Response $response){
+      $response = $response->withHeader('Content-type', 'application/json');
+      $dataBody = json_decode($request->getBody(),true);
+      $respuesta = array();
+      $user = getUserByHeader($request->getHeaders());
+      try{
+        $usuario = new Usuario;
+        $usuario->identificacion      = $dataBody['usuario'];
+        $usuario->contrasena          = sha1($dataBody['contrasena']);
+        $usuario->idPerfil            = $dataBody['perfil'];
+        $usuario->email               = $dataBody['email'];
+        $usuario->telefono            = $dataBody['telefono'];
+        $usuario->estado              = "ACTIVO";
+        $usuario->usuarioCreacion     = $user->identificacion;
+        $usuario->usuarioModificacion = $user->identificacion;
+        $usuario->save();
+        //GUARDAR PERMISOS
+        for($i = 0; $i < count($dataBody['permisos']); $i++){
+          $permisos = new Permisos;
+          $permisos->idUsuario    = $usuario->id;
+          $permisos->idModulo     = $dataBody['permisos'][$i]['idModulo'];
+          $permisos->idMenu       = $dataBody['permisos'][$i]['idMenu'];
+          $permisos->save();
+        }
+        $respuesta = array("msg" => "Guardando correctamente", "std" => 1);
+      }catch(Exception $ex){
+        $respuesta = array("msg" => "El usuario ya existe, ".$ex->getMessage(), "std" => 0);
+      }
+      $response->getBody()->write(json_encode($respuesta));
+      return $response;
+  }
+  
+  function getMenuByUsuario(Request $request, Response $response) {
+      $response = $response->withHeader('Content-type', 'application/json');
+      $user = getUserByHeader($request->getHeaders());
+      $data = Permisos::select("modulo.id","modulo.nombre","modulo.abierto","modulo.icon","modulo.id as menu")
                 ->join("modulo","modulo.id","=","permisos.idModulo")
-                ->where("permisos.idPerfil","=",$idPerfil)
+                ->where("permisos.idUsuario","=",$user->id)
                 ->where("modulo.estado","=","ACTIVO")
                 ->distinct()
                 ->get();
 
-      $dataMen = Menu::select("menu.*","menu.id as activo")
+      $dataMen = Menu::select("menu.*")
               ->join("permisos","permisos.idMenu","=","menu.id")
+              ->where("permisos.idUsuario","=",$user->id)
               ->where("menu.estado","=","ACTIVO")
               ->distinct()
               ->get();
@@ -27,11 +66,9 @@ class UsuarioControl{
         $vec = array();
         for($j = 0; $j < count($dataMen); $j++){
           if($data[$i]->id == $dataMen[$j]->idModulo){
-            $dataMen[$j]->activo = false;
             array_push($vec, $dataMen[$j]);
           }
         }
-        $data[$i]->activo = false;
         $data[$i]->menu = $vec;
       }
 

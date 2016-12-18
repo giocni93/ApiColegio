@@ -1,6 +1,16 @@
 <?php
+  use Firebase\JWT\JWT;
+
   //VARIABLES GLOBALES
   $rutaServidor = "http://localhost/PROYECTOS/ProyectoSlim/BuscaloApi/";
+
+  function getUserByHeader($header){
+    $token = $header['HTTP_AUTHORIZATION'][0];
+    $token = str_replace("bearer ", "", $token);
+    $token = str_replace("Bearer ", "", $token);
+    $user = JWT::decode($token ,'secretapischooldogfab', array('HS256'));
+    return $user->user;
+  }
 
   function formatearFecha($lista){
       foreach ($lista as $item) {
