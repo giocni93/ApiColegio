@@ -10,4 +10,9 @@ app.service("ProfesorServicio",["$http", function ($http) {
         return req;
 	}
 
+	this.postprofesor = function(object){
+		var req = $http.post(uri+'profesor',object);
+        return req;
+	}
+
 }]);
