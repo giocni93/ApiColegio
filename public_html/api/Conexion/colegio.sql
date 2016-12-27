@@ -107,7 +107,10 @@ INSERT INTO `permisos` (`id`, `idPerfil`, `idModulo`, `idMenu`) VALUES
 
 CREATE TABLE `profesor` (
   `id` int(10) UNSIGNED NOT NULL,
-  `nombre` varchar(50) NOT NULL
+  `nombre_apellido` varchar(50) NOT NULL,
+  `cedula` varchar(11) NOT NULL,
+  `celular` varchar(11) NOT NULL,
+  `correo` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
