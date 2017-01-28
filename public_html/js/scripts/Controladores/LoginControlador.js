@@ -19,7 +19,7 @@ app.controller('LoginControlador', ["$scope","LoginServicio", "$auth", function 
 	            }
 	            
 	        }, function(err) {           
-	            colegio.toast('bottom','center',colorRojo,4000,"error",err);
+	            colegio.toast('bottom','center',colorRojo,4000,"error",JSON.stringify(err));
 	        });
 		}
 	};

@@ -47,31 +47,38 @@ class UsuarioControl{
   function getMenuByUsuario(Request $request, Response $response) {
       $response = $response->withHeader('Content-type', 'application/json');
       $user = getUserByHeader($request->getHeaders());
-      $data = Permisos::select("modulo.id","modulo.nombre","modulo.abierto","modulo.icon","modulo.id as menu")
-                ->join("modulo","modulo.id","=","permisos.idModulo")
+      try{
+
+        $data = Permisos::select("modulo.id","modulo.nombre","modulo.abierto","modulo.icon","modulo.id as menu")
+                  ->join("modulo","modulo.id","=","permisos.idModulo")
+                  ->where("permisos.idUsuario","=",$user->id)
+                  ->where("modulo.estado","=","ACTIVO")
+                  ->distinct()
+                  ->get();
+
+        $dataMen = Menu::select("menu.*")
+                ->join("permisos","permisos.idMenu","=","menu.id")
                 ->where("permisos.idUsuario","=",$user->id)
-                ->where("modulo.estado","=","ACTIVO")
+                ->where("menu.estado","=","ACTIVO")
                 ->distinct()
                 ->get();
 
-      $dataMen = Menu::select("menu.*")
-              ->join("permisos","permisos.idMenu","=","menu.id")
-              ->where("permisos.idUsuario","=",$user->id)
-              ->where("menu.estado","=","ACTIVO")
-              ->distinct()
-              ->get();
-
-      //ORGANIZAR LA INFORMACION DEL MENU
-      for($i = 0; $i < count($data); $i++){
-        $vec = array();
-        for($j = 0; $j < count($dataMen); $j++){
-          if($data[$i]->id == $dataMen[$j]->idModulo){
-            array_push($vec, $dataMen[$j]);
+        //ORGANIZAR LA INFORMACION DEL MENU
+        for($i = 0; $i < count($data); $i++){
+          $vec = array();
+          for($j = 0; $j < count($dataMen); $j++){
+            if($data[$i]->id == $dataMen[$j]->idModulo){
+              array_push($vec, $dataMen[$j]);
+            }
           }
+          $data[$i]->menu = $vec;
         }
-        $data[$i]->menu = $vec;
-      }
 
+
+      }catch(Exception $ex){
+        $response->getBody()->write(json_encode(array("error" => $ex)));
+        return $response;
+      }
       $response->getBody()->write(json_encode($data));
       return $response;
   }
