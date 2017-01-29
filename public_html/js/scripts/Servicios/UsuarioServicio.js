@@ -15,4 +15,14 @@ app.service("UsuarioServicio", function ($http) {
         return req;
 	}	
 
+	this.put = function(id,usuario){
+		var req = $http.put(uri+'usuario/'+id,usuario);
+        return req;
+	}
+
+	this.putEstado = function(id,obj){
+		var req = $http.put(uri+'usuario/'+id+'/estado',obj);
+        return req;
+	}	
+
 });

@@ -101,12 +101,12 @@
                             	<td>{{item.fechaCreacion | date:"dd-MM-yyyy 'a las' h:mm a"}}</td>
                             	<td>
                             		<div class="material-switch pull-center">
-			                            <input ng-checked="item.estado == 'ACTIVO'" id="check{{item.id}}" name="check{{item.id}}" type="checkbox"/>
+			                            <input ng-change="cambiarEstadoUsuario(item);" ng-model="item.estado" ng-true-value="'ACTIVO'" ng-false-value="'INACTIVO'" id="check{{item.id}}" name="check{{item.id}}" type="checkbox"/>
 			                            <label for="check{{item.id}}" class="label-info"></label>
 			                        </div>
                             	</td>
 								<td >
-									<button class="btn btn-info btn-round btn-just-icon">
+									<button class="btn btn-info btn-round btn-just-icon" ng-click="abrirModal(item);">
 										<i class="material-icons">edit</i><div class="ripple-container"></div>
 									</button>
 								</td>
@@ -117,4 +117,70 @@
 			</div>
 		</div>
 	</div>
+
+
+	<div id="modalUsuario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="margin-top: -50px;">
+        <div class="modal-dialog" style="width: 50%; height: auto;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 id="myModalLabel">Editar usuario</h4>
+                </div>
+                <div class="modal-body">
+                	<div class="content" style="margin-left: 20px; margin-right: 20px;">
+						<div class="row">
+							<div class="col-sm-4">
+								<div class="form-group label-floating">
+									<label class="control-label">Usuario</label>
+									<input ng-model="usuarioUpdate.identificacion" type="text" class="form-control">
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group label-floating">
+									<label class="control-label">Email</label>
+									<input ng-model="usuarioUpdate.email" type="email" class="form-control">
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group label-floating">
+									<label class="control-label">Teléfono</label>
+									<input ng-model="usuarioUpdate.telefono" type="text" class="form-control">
+								</div>
+							</div>
+						</div>
+						<h3 class="title text-center">Permisos</h3>
+						<div ng-repeat="item in permisosUpdate">
+							<div class="row" style="position: relative; top: -10px;">
+								<div class="col-sm-12">
+									<h6 class="text-success">{{item.nombre}}</h6>
+									<hr class="divider" />
+								</div>
+							</div>
+							<div class="row" style="position: relative; top: -20px;">
+								<div class="col-sm-4" ng-repeat="subItem in item.menu">
+									<div class="checkbox">
+										<label style="color: black;">
+											<input ng-model="subItem.check" type="checkbox" name="optionsCheckboxes"><span class="checkbox-material"><span class="check"></span></span>
+											{{subItem.item}}
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+                <div class="modal-footer" style="margin-left: 5px;">
+                	<div class="pull-right">
+						<button ng-disabled="banGuardando" class="btn btn-fill btn-info" ng-click="actualizarUsuario();"> Continuar </button>
+					</div>
+                	<div class="pull-right" style="margin-right: 5px;">
+						<button ng-disabled="banGuardando" class="btn btn-fill btn-danger" ng-click="cerrarModal();"> Cancelar </button>
+					</div>
+					<img class="pull-left" ng-show="banGuardando" src="images/rolling.gif" style="width: 30px; height:30px; margin-left: 10px; " />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
